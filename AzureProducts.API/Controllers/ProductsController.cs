@@ -40,6 +40,7 @@ namespace AzureProducts.API.Controllers
             }
             catch (Exception ex)
             {
+                Serilog.Log.Error(ex, "Exception has occured during Post action.");
                 return InternalServerError(ex);
             }
 
@@ -55,6 +56,7 @@ namespace AzureProducts.API.Controllers
             }
             catch (Exception ex)
             {
+                Serilog.Log.Error(ex, "Exception has occured during Put action.");
                 return InternalServerError(ex);
             }
 

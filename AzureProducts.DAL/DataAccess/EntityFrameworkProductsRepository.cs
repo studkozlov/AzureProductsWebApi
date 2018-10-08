@@ -35,12 +35,12 @@ namespace AzureProducts.DAL.DataAccess
 
         public Product Get(int id)
         {
-            return _context.Products.FirstOrDefault(p => p.ProductID == id);
+            return _context.Products.AsNoTracking().FirstOrDefault(p => p.ProductID == id);
         }
 
         public IEnumerable<Product> GetAll()
         {
-            return _context.Products.ToList();
+            return _context.Products.AsNoTracking().ToList();
         }
 
         public void Update(Product item)
