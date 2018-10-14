@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Serilog;
-using Serilog.Sinks.File;
 using System.IO;
 
 namespace AzureProducts.API
@@ -24,6 +23,7 @@ namespace AzureProducts.API
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.File(Path.Combine(HttpRuntime.AppDomainAppPath, "log.txt"))
+                .WriteTo.Console()
                 .CreateLogger();
         }
     }
