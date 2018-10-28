@@ -8,6 +8,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Serilog;
 using System.IO;
+using Microsoft.WindowsAzure.Storage;
+using System.Configuration;
 
 namespace AzureProducts.API
 {
@@ -20,10 +22,11 @@ namespace AzureProducts.API
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var storage = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
             Log.Logger = new LoggerConfiguration()
+                .WriteTo.AzureTableStorage(storage)
                 .MinimumLevel.Information()
-                .WriteTo.File(Path.Combine(HttpRuntime.AppDomainAppPath, "log.txt"))
-                .WriteTo.Console()
                 .CreateLogger();
         }
     }
