@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AzureProducts.BLL.Services;
+using System.Threading.Tasks;
 
 namespace AzureProductsWebApi.Controllers
 {
@@ -28,7 +29,7 @@ namespace AzureProductsWebApi.Controllers
 
         // POST: api/production/document
         [Route("api/production/document")]
-        public IHttpActionResult Post()
+        public async Task<IHttpActionResult> Post()
         {
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -38,7 +39,7 @@ namespace AzureProductsWebApi.Controllers
             }
 
             var provider = new MultipartMemoryStreamProvider();
-            Request.Content.ReadAsMultipartAsync(provider).GetAwaiter().GetResult();
+            await Request.Content.ReadAsMultipartAsync(provider);
             var storage = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
             foreach (var file in provider.Contents)
             {
