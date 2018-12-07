@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 using AzureProducts.BLL.Infrastructure;
 using AzureProducts.BLL.Services;
 
@@ -23,6 +24,9 @@ namespace AzureProducts.API.Controllers
         // GET api/products/5
         public IHttpActionResult Get(int id)
         {
+            if (id < 0)
+                return new BadRequestResult(Request);
+
             var product = _service.GetProductById(id);
             if (product == null)
             {
